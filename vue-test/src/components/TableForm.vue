@@ -7,22 +7,25 @@
       <div class="table">
         <div class="name_column">
           <div class="name">Имя</div>
-          <div class="dinamic-name">{{ dinamic_name }}</div>
-          <div class="dinamic-name">{{ dinamic_name }}</div>
-          <div class="dinamic-name">{{ dinamic_name }}</div>
-          <div class="dinamic-name">{{ dinamic_name }}</div>
+          <div class="dinamic-name">
+            {{ name }}
+          </div>
         </div>
-
         <div class="number_column">
           <div class="phone_number">Телефон</div>
-          <div class="dinamic-number">{{ dinamic_number }}</div>
-          <div class="dinamic-number">{{ dinamic_number }}</div>
-          <div class="dinamic-number">{{ dinamic_number }}</div>
-          <div class="dinamic-number">{{ dinamic_number }}</div>
+          <div class="dinamic-number">
+            {{ number }}
+          </div>
         </div>
       </div>
     </div>
-    <ModalWindow v-show="isModalVisible" @close="closeModal" />
+    <ModalWindow
+      v-on:saved="onSaved"
+      v-bind:name="name"
+      v-bind:number="number"
+      @close="closeModal"
+      v-show="isModalVisible"
+    />
   </div>
 </template>
 
@@ -30,14 +33,11 @@
 import ModalWindow from "./ModalWindow.vue";
 export default {
   name: "TableForm",
-  components: {
-    ModalWindow
-  },
   data() {
     return {
       isModalVisible: false,
-      dinamic_name: "Liubava",
-      dinamic_number: "+7 977 325 53 35"
+      name: " ",
+      number: " "
     };
   },
   methods: {
@@ -46,7 +46,15 @@ export default {
     },
     closeModal() {
       this.isModalVisible = false;
+    },
+    onSaved(name, number) {
+      this.name = name;
+      this.number = number;
+      console.log("onSaved", name, number);
     }
+  },
+  components: {
+    ModalWindow
   }
 };
 </script>

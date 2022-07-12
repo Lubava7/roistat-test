@@ -12,25 +12,17 @@
         </div>
 
         <div class="body-part">
-          <input
-            type="text"
-            @click="hideText"
-            v-bind:value="names"
-            @input="names = $event.target.value"
-          />
-          <input
-            type="number"
-            @click="hideText"
-            v-bind:value="numbers"
-            @input="numbers = $event.target.value"
-          />
+          <input type="text" v-model="name" change="targetName" />
+          <input type="number" v-model="number" change="targetNumber" />
           <select>
-            <option>Родитель динамично</option>
+            <option>{{ name }}</option>
           </select>
         </div>
       </div>
       <div class="modal-footer" name="footer">
-        <button @click="close">Сохранить</button>
+        <button @click="saved">
+          Сохранить
+        </button>
       </div>
     </div>
   </div>
@@ -40,27 +32,39 @@ export default {
   name: "Modal",
   data() {
     return {
-      names: "",
-      numbers: ""
+      name: [],
+      number: []
     };
   },
   mounted() {
-    if (localStorage.names) {
-      this.names = localStorage.names;
+    if (localStorage.name) {
+      this.name = localStorage.name;
     }
-    if (localStorage.numbers) {
-      this.numbers = localStorage.numbers;
+    if (localStorage.number) {
+      this.number = localStorage.number;
     }
   },
-  methods: {
-    close() {
-      localStorage.names = this.names;
-      localStorage.numbers = this.numbers;
-      this.$emit("close");
+  watch: {
+    names(newName) {
+      localStorage.name = newName;
     },
-    hideText() {
-      this.names = "";
-      this.nambers = "";
+    numbers(newNumber) {
+      localStorage.number = newNumber;
+    }
+  },
+
+  methods: {
+    saved() {
+      localStorage.name = this.name;
+      localStorage.number = this.number;
+      this.$emit("close");
+      this.$emit("saved", [this.name], [this.number]);
+    },
+    targetName(event) {
+      this.name = event.target.value;
+    },
+    targetNumber(event) {
+      this.number = event.target.value;
     }
   }
 };
