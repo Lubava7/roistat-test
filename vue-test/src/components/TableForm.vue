@@ -7,13 +7,17 @@
       <div class="table">
         <div class="name_column">
           <div class="name">Имя</div>
-          <div class="dinamic-name">
+          <div v-for="nam in name" v-bind:key="name.id" class="dinamic-name">
             {{ name }}
           </div>
         </div>
         <div class="number_column">
           <div class="phone_number">Телефон</div>
-          <div class="dinamic-number">
+          <div
+            v-for="numb in number"
+            v-bind:key="number.id"
+            class="dinamic-number"
+          >
             {{ number }}
           </div>
         </div>
@@ -36,8 +40,8 @@ export default {
   data() {
     return {
       isModalVisible: false,
-      name: " ",
-      number: " "
+      name: [],
+      number: []
     };
   },
   methods: {
@@ -48,8 +52,10 @@ export default {
       this.isModalVisible = false;
     },
     onSaved(name, number) {
-      this.name = name;
-      this.number = number;
+      // this.name = name;
+      // this.number = number;
+      this.name.unshift(name);
+      this.number.unshift(number);
       console.log("onSaved", name, number);
     }
   },
@@ -111,7 +117,7 @@ export default {
 .dinamic-name {
   border-bottom: 0.5px solid black;
   display: flex;
-  height: 100%;
+  height: 30px;
   width: 97%;
   flex-direction: column;
   align-items: flex-start;
@@ -119,7 +125,7 @@ export default {
 }
 .dinamic-number {
   border-bottom: 0.5px solid black;
-  height: 100%;
+  height: 30px;
   width: 97%;
   display: flex;
   flex-direction: column;

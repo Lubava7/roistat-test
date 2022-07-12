@@ -32,8 +32,8 @@ export default {
   name: "Modal",
   data() {
     return {
-      name: [],
-      number: []
+      name: " ",
+      number: " "
     };
   },
   mounted() {
