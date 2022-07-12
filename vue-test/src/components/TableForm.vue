@@ -52,8 +52,6 @@ export default {
       this.isModalVisible = false;
     },
     onSaved(name, number) {
-      // this.name = name;
-      // this.number = number;
       this.name.unshift(name);
       this.number.unshift(number);
       console.log("onSaved", name, number);

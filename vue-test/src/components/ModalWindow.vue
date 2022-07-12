@@ -15,7 +15,9 @@
           <input type="text" v-model="name" change="targetName" />
           <input type="number" v-model="number" change="targetNumber" />
           <select>
-            <option>{{ name }}</option>
+            <option v-for="nam in name" v-bind:key="name.index">
+              {{ name }}
+            </option>
           </select>
         </div>
       </div>
@@ -28,12 +30,13 @@
   </div>
 </template>
 <script>
+import { watch } from "vue";
 export default {
   name: "Modal",
   data() {
     return {
-      name: " ",
-      number: " "
+      name: [],
+      number: []
     };
   },
   mounted() {
@@ -58,7 +61,7 @@ export default {
       localStorage.name = this.name;
       localStorage.number = this.number;
       this.$emit("close");
-      this.$emit("saved", [this.name], [this.number]);
+      this.$emit("saved", this.name, this.number);
     },
     targetName(event) {
       this.name = event.target.value;
